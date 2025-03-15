@@ -1,0 +1,377 @@
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: Slussen;
+    src: url(/fonts/Slussen-Compressed-Black.woff2) format("woff2");
+    font-display: swap;
+    font-weight: 900;
+    font-stretch: compressed;
+}
+
+@font-face {
+    font-family: Slussen;
+    src: url(/fonts/Slussen-Expanded-Black.woff2) format("woff2");
+    font-display: swap;
+    font-weight: 900;
+    font-stretch: expanded;
+}
+
+@font-face {
+    font-family: Slussen;
+    src: url(/fonts/Slussen-Regular.woff2) format("woff2");
+    font-display: swap;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: Slussen;
+    src: url(/fonts/Slussen-Bold.woff2) format("woff2");
+    font-display: swap;
+    font-weight: 700;
+}
+
+html {
+    scroll-behavior: initial;
+    overflow-x: hidden;
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Inter', Slussen, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    background: #000;
+    color: #fff;
+}
+
+/* Typography */
+h1, h2, h3, h4 {
+    text-transform: uppercase;
+    font-weight: 900;
+    line-height: 1;
+}
+
+h1 {
+    font-size: 80px;
+    line-height: 0.9;
+}
+
+h2 {
+    font-size: 60px;
+    line-height: 0.85;
+}
+
+h3 {
+    font-size: 20px;
+    color: #ff98a2;
+    margin-bottom: 12px;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+a {
+    color: #ff98a2;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #ffb3ba;
+}
+
+/* Layout */
+.container {
+    width: 90%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+section {
+    padding: 80px 0;
+}
+
+/* Hero Section */
+#hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero__text {
+    flex: 1;
+}
+
+.hero__heading span {
+    display: block;
+}
+
+.hero__heading span:first-child {
+    color: #ff98a2;
+}
+
+.hero__subheading {
+    font-size: 20px;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+/* Typewriter effect */
+.typewriter-text, .typewriter-subheading {
+    position: relative;
+    display: inline-block;
+}
+
+.typewriter-text::after, .typewriter-subheading::after {
+    content: '';
+    position: absolute;
+    right: -4px;
+    top: 0;
+    height: 100%;
+    width: 2px;
+    background-color: #ff98a2;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+.hero__image-container {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.hero__image-wrapper {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    overflow: hidden;
+    border-radius: 4px;
+}
+
+.hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+    filter: grayscale(100%);
+    transition: filter 0.5s ease;
+}
+
+.hero__image:hover {
+    filter: grayscale(0%);
+}
+
+.hero__image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+    mix-blend-mode: multiply;
+}
+
+/* Vertical Section */
+#vertical {
+    height: 200vh;
+    width: 100vw;
+}
+
+.vertical__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.col {
+    width: 48%;
+}
+
+.vertical__content .col_left {
+    position: sticky;
+    top: 80px;
+    height: 100%;
+}
+
+.vertical__heading {
+    border-left: 3px solid #ff98a2;
+    padding: 25px;
+}
+
+.vertical__heading span {
+    display: block;
+}
+
+.vertical__item {
+    margin-bottom: 180px;
+}
+
+.vertical__item:last-child {
+    margin-bottom: 0;
+}
+
+/* Horizontal Section */
+#horizontal {
+    padding: 100px 0;
+    overflow: hidden;
+}
+
+.section__heading {
+    margin-bottom: 40px;
+}
+
+.horizontal__content {
+    display: flex;
+    gap: 50px;
+}
+
+.horizontal__item {
+    min-width: 500px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.horizontal__num {
+    font-size: 48px;
+    font-weight: 900;
+    color: #ff98a2;
+    margin-bottom: 16px;
+}
+
+.horizontal__desc {
+    margin-bottom: 24px;
+}
+
+.project__image {
+    width: 100%;
+    height: 250px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+}
+
+.contact__links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* Footer */
+footer {
+    padding: 40px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .hero__content {
+        flex-direction: column-reverse;
+        text-align: center;
+    }
+    
+    .hero__subheading {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero__image-container {
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+    
+    .hero__image-wrapper {
+        width: 300px;
+        height: 375px;
+    }
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 48px;
+    }
+    
+    h2 {
+        font-size: 36px;
+    }
+    
+    .vertical__content {
+        flex-direction: column;
+    }
+    
+    .col {
+        width: 100%;
+    }
+    
+    .vertical__content .col_left {
+        position: relative;
+        top: 0;
+        margin-bottom: 40px;
+    }
+    
+    .vertical__item {
+        margin-bottom: 80px;
+    }
+    
+    .horizontal__item {
+        min-width: 300px;
+        padding: 30px;
+    }
+    
+    footer .container {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
