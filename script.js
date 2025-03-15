@@ -50,25 +50,35 @@ typewriterTimeline.to(typewriterSubheading, {
 const heroImage = document.querySelector('.hero__image-wrapper');
 const heroImageImg = document.querySelector('.hero__image');
 
-// Initial animation for hero image
+// Initial animation for hero image - adjusted for circular image
 gsap.fromTo(heroImage, 
-  { y: 100, opacity: 0 },
-  { y: 0, opacity: 1, duration: 1.5, ease: "power3.out", delay: 0.5 }
+  { y: 100, opacity: 0, scale: 0.8 },
+  { y: 0, opacity: 1, scale: 1, duration: 1.5, ease: "power3.out", delay: 0.5 }
 );
 
-// Floating animation for hero image
+// Floating animation for hero image - more subtle for circular image
 gsap.to(heroImage, {
-  y: 20,
+  y: 15,
   duration: 3,
   repeat: -1,
   yoyo: true,
   ease: "sine.inOut"
 });
 
-// Parallax effect for hero image on mouse move
+// Rotation animation for circular image
+gsap.to(heroImage, {
+  rotation: 5,
+  duration: 4,
+  repeat: -1,
+  yoyo: true,
+  ease: "sine.inOut",
+  delay: 1
+});
+
+// Parallax effect for hero image on mouse move - adjusted for circular image
 document.addEventListener('mousemove', (e) => {
-  const xPos = (e.clientX / window.innerWidth - 0.5) * 20;
-  const yPos = (e.clientY / window.innerHeight - 0.5) * 20;
+  const xPos = (e.clientX / window.innerWidth - 0.5) * 15;
+  const yPos = (e.clientY / window.innerHeight - 0.5) * 15;
   
   gsap.to(heroImageImg, {
       x: xPos,
@@ -133,6 +143,66 @@ gsap.to(box_items, {
   }
 });
 
+// Circular progress animation for contact section
+const contactSection = document.getElementById("contact");
+const circleProgress = document.querySelector(".contact__circle-progress");
+const circleWrapper = document.querySelector(".contact__circle-wrapper");
+
+// Get the circumference of the circle
+const radius = 48;
+const circumference = 2 * Math.PI * radius;
+
+// Set up the circular scroll trigger animation
+ScrollTrigger.create({
+  trigger: contactSection,
+  start: "top bottom",
+  end: "bottom top",
+  scrub: true,
+  onUpdate: (self) => {
+      // Calculate progress (0 to 1)
+      const progress = self.progress;
+      
+      // Calculate the dashoffset based on progress
+      const dashoffset = circumference - (progress * circumference);
+      
+      // Update the circle's dashoffset
+      circleProgress.style.strokeDashoffset = dashoffset;
+      
+      // Rotate the circle based on progress
+      gsap.to(circleWrapper, {
+          rotation: progress * 360,
+          duration: 0.1,
+          ease: "none"
+      });
+  }
+});
+
+// Initial animation for contact circle
+gsap.from(circleWrapper, {
+  scale: 0.5,
+  opacity: 0,
+  duration: 1,
+  scrollTrigger: {
+      trigger: contactSection,
+      start: "top bottom",
+      toggleActions: "play none none reverse"
+  }
+});
+
+// Form elements animation
+const formElements = document.querySelectorAll('.form__group, .form__submit');
+gsap.from(formElements, {
+  y: 30,
+  opacity: 0,
+  duration: 0.8,
+  stagger: 0.1,
+  scrollTrigger: {
+      trigger: '.contact__form',
+      start: "top bottom-=100",
+      toggleActions: "play none none reverse"
+  }
+});
+
 // Back to top functionality
 document.querySelector('.back-to-top').addEventListener('click', (e) => {
   e.preventDefault();
@@ -158,3 +228,25 @@ projectItems.forEach(item => {
       });
   });
 });
+
+// Form submission handling (prevent default for demo)
+const contactForm = document.querySelector('.contact__form');
+if (contactForm) {
+  contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Get form values
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      
+      // In a real application, you would send this data to a server
+      console.log('Form submitted:', { name, email, message });
+      
+      // Show success message (in a real app)
+      alert('Thanks for your message! I\'ll get back to you soon.');
+      
+      // Reset form
+      contactForm.reset();
+  });
+}

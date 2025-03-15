@@ -77,6 +77,12 @@ h3 {
     margin-bottom: 12px;
 }
 
+h4 {
+    font-size: 16px;
+    color: #ff98a2;
+    margin-bottom: 8px;
+}
+
 p {
     margin-bottom: 1rem;
     color: rgba(255, 255, 255, 0.8);
@@ -164,14 +170,17 @@ section {
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    margin-top: -80px; /* Move the image up */
 }
 
 .hero__image-wrapper {
     position: relative;
     width: 400px;
-    height: 500px;
+    height: 400px; /* Make it square for a perfect circle */
     overflow: hidden;
-    border-radius: 4px;
+    border-radius: 50%; /* Make it circular */
+    border: 4px solid rgba(255, 255, 255, 0.1); /* Add a subtle border */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Add a subtle shadow */
 }
 
 .hero__image {
@@ -193,7 +202,7 @@ section {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+    background: radial-gradient(circle, rgba(0,0,0,0.1), rgba(0,0,0,0.4)); /* Changed to radial gradient for circular image */
     mix-blend-mode: multiply;
 }
 
@@ -284,6 +293,152 @@ section {
     gap: 12px;
 }
 
+/* Contact Section with Circular Scroll Trigger */
+#contact {
+    padding: 120px 0;
+    background-color: #050505;
+    position: relative;
+    overflow: hidden;
+}
+
+.contact__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 60px;
+}
+
+.contact__circle-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact__circle-wrapper {
+    position: relative;
+    width: 400px;
+    height: 400px;
+}
+
+.contact__circle {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact__circle-inner {
+    position: absolute;
+    width: 80%;
+    height: 80%;
+    background-color: #0a0a0a;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+}
+
+.contact__circle-inner h2 {
+    font-size: 48px;
+    color: #ff98a2;
+    line-height: 0.9;
+}
+
+.contact__circle-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.contact__circle-progress {
+    fill: none;
+    stroke: #ff98a2;
+    stroke-width: 2;
+    stroke-dasharray: 301.59; /* Circumference of circle with r=48 (2 * PI * r) */
+    stroke-dashoffset: 301.59; /* Start with full offset (no progress) */
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.contact__form-container {
+    flex: 1;
+    max-width: 600px;
+}
+
+.contact__form {
+    margin-top: 30px;
+    margin-bottom: 40px;
+}
+
+.form__group {
+    margin-bottom: 20px;
+}
+
+.form__group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.form__group input,
+.form__group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form__group input:focus,
+.form__group textarea:focus {
+    outline: none;
+    border-color: #ff98a2;
+}
+
+.form__submit {
+    padding: 12px 24px;
+    background-color: #ff98a2;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form__submit:hover {
+    background-color: #ffb3ba;
+}
+
+.contact__info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+.contact__info-item {
+    flex: 1;
+}
+
+.contact__social {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 /* Footer */
 footer {
     padding: 40px 0;
@@ -330,11 +485,26 @@ footer .container {
     .hero__image-container {
         justify-content: center;
         margin-bottom: 40px;
+        margin-top: 0; /* Reset margin for mobile */
     }
     
     .hero__image-wrapper {
         width: 300px;
-        height: 375px;
+        height: 300px;
+    }
+    
+    .contact__content {
+        flex-direction: column;
+    }
+    
+    .contact__circle-wrapper {
+        width: 300px;
+        height: 300px;
+        margin-bottom: 40px;
+    }
+    
+    .contact__circle-inner h2 {
+        font-size: 36px;
     }
 }
 
@@ -368,6 +538,11 @@ footer .container {
     .horizontal__item {
         min-width: 300px;
         padding: 30px;
+    }
+    
+    .contact__info {
+        flex-direction: column;
+        gap: 30px;
     }
     
     footer .container {
