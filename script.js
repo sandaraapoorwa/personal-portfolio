@@ -30,7 +30,7 @@ function initAnimatedBackground() {
       ease: 'sine.inOut'
   });
   
-  // Create particles
+  // Create particles with some larger ones
   const particlesContainer = document.querySelector('.particles-container');
   const particleCount = window.innerWidth < 768 ? 30 : 60;
   
@@ -38,8 +38,8 @@ function initAnimatedBackground() {
       const particle = document.createElement('div');
       particle.classList.add('particle');
       
-      // Random size between 2px and 6px
-      const size = Math.random() * 4 + 2;
+      // Random size between 2px and 12px
+      const size = Math.random() * 10 + 2;
       particle.style.width = `${size}px`;
       particle.style.height = `${size}px`;
       
@@ -53,7 +53,6 @@ function initAnimatedBackground() {
       const opacity = Math.random() * 0.4 + 0.1;
       particle.style.opacity = opacity;
       
-      // Changed color from pink to white
       particle.style.backgroundColor = `rgba(255, 255, 255, ${opacity})`;
       
       particlesContainer.appendChild(particle);
@@ -70,99 +69,180 @@ function initAnimatedBackground() {
           delay: Math.random() * 5
       });
   }
+}
+
+// Navbar functionality
+function initNavbar() {
+  const navbar = document.querySelector('.navbar');
+  const mobileToggle = document.querySelector('.navbar__mobile-toggle');
+  const mobileMenu = document.querySelector('.navbar__mobile-menu');
+  const navLinks = document.querySelectorAll('.navbar__link');
+  const mobileLinks = document.querySelectorAll('.navbar__mobile-link');
   
-  // Animate floating shapes
-  const shapes = document.querySelectorAll('.shape');
-  shapes.forEach(shape => {
-      // Initial random position adjustment
-      const xOffset = (Math.random() - 0.5) * 20;
-      const yOffset = (Math.random() - 0.5) * 20;
-      
-      gsap.set(shape, {
-          x: xOffset,
-          y: yOffset
-      });
-      
-      // Continuous floating animation
-      gsap.to(shape, {
-          x: `+=${(Math.random() - 0.5) * 100}`,
-          y: `+=${(Math.random() - 0.5) * 100}`,
-          rotation: Math.random() * 360,
-          duration: Math.random() * 20 + 20,
-          repeat: -1,
-          yoyo: true,
-          ease: 'sine.inOut',
-          delay: Math.random() * 5
-      });
-  });
-  
-  // Parallax effect on background elements based on scroll
-  gsap.to('.floating-shapes', {
-      y: () => window.innerHeight * 0.5,
-      ease: 'none',
-      scrollTrigger: {
-          trigger: 'body',
-          start: 'top top',
-          end: 'bottom bottom',
-          scrub: 0.5
+  window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+      } else {
+          navbar.classList.remove('scrolled');
       }
   });
   
-  // Mouse movement effect
-  document.addEventListener('mousemove', (e) => {
-      const mouseX = e.clientX / window.innerWidth;
-      const mouseY = e.clientY / window.innerHeight;
-      
-      gsap.to('.floating-shapes', {
-          x: (mouseX - 0.5) * 50,
-          y: (mouseY - 0.5) * 50,
-          duration: 1,
-          ease: 'power1.out'
+  mobileToggle.addEventListener('click', () => {
+      mobileToggle.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      document.body.classList.toggle('no-scroll');
+  });
+  
+  mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+          mobileToggle.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          document.body.classList.remove('no-scroll');
       });
   });
+  
+  function handleNavLinkClick(e) {
+      e.preventDefault();
+      const targetId = this.getAttribute('href');
+      const targetSection = document.querySelector(targetId);
+      
+      if (targetSection) {
+          lenis.scrollTo(targetSection, {
+              duration: 1.2,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+      }
+  }
+  
+  navLinks.forEach(link => {
+      link.addEventListener('click', handleNavLinkClick);
+  });
+  
+  mobileLinks.forEach(link => {
+      link.addEventListener('click', handleNavLinkClick);
+  });
+  
+  function highlightActiveLink() {
+      const sections = [
+          { section: document.getElementById('vertical'), index: 0 },
+          { section: document.getElementById('horizontal'), index: 1 },
+          { section: document.getElementById('contact'), index: 2 }
+      ];
+      
+      const scrollPosition = window.scrollY + window.innerHeight / 2; // Use middle of viewport for accuracy
+      
+      let activeIndex = -1;
+      sections.forEach(({ section, index }) => {
+          if (!section) return;
+          
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          
+          // Special handling for the horizontal section
+          if (index === 1) { // Horizontal section
+              const sectionEnd = sectionTop + sectionHeight;
+              if (scrollPosition >= sectionTop && scrollPosition <= sectionEnd) {
+                  activeIndex = index;
+              }
+          } else {
+              if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                  activeIndex = index;
+              }
+          }
+      });
+
+      // If no section is active, default to the closest section
+      if (activeIndex === -1) {
+          activeIndex = sections.reduce((closestIndex, { section }, index) => {
+              if (!section) return closestIndex;
+              const sectionTop = section.offsetTop;
+              const distance = Math.abs(scrollPosition - sectionTop);
+              return distance < Math.abs(scrollPosition - (sections[closestIndex]?.section?.offsetTop || Infinity)) ? index : closestIndex;
+          }, 0);
+      }
+
+      // Update active classes
+      navLinks.forEach(link => link.classList.remove('active'));
+      mobileLinks.forEach(link => link.classList.remove('active'));
+      
+      if (activeIndex !== -1) {
+          navLinks[activeIndex].classList.add('active');
+          mobileLinks[activeIndex].classList.add('active');
+      }
+  }
+  
+  window.addEventListener('scroll', highlightActiveLink);
+  highlightActiveLink();
 }
 
-// Initialize animated background
+// Initialize navbar and background
+initNavbar();
 initAnimatedBackground();
 
-// Typewriter effect for hero section
-const typewriterText = document.querySelector('.typewriter-text');
-const typewriterSubheading = document.querySelector('.typewriter-subheading');
+// Enhanced Typewriter Effect for Hero Section
+function initTypewriterEffect() {
+  const typewriterText1 = document.querySelector('.typewriter-text-1');
+  const typewriterText2 = document.querySelector('.typewriter-text-2');
+  const typewriterSubheading = document.querySelector('.typewriter-subheading');
 
-// Store the original text and then empty the elements
-const originalName = typewriterText.textContent;
-const originalSubheading = typewriterSubheading.textContent;
-typewriterText.textContent = '';
-typewriterSubheading.textContent = '';
+  const originalName1 = typewriterText1.dataset.text;
+  const originalName2 = typewriterText2.dataset.text;
+  const originalSubheading = typewriterSubheading.dataset.text;
 
-// Create a timeline for the typewriter effect
-const typewriterTimeline = gsap.timeline();
+  typewriterText1.textContent = '';
+  typewriterText2.textContent = '';
+  typewriterSubheading.textContent = '';
 
-// Add the typewriter animation for the name
-typewriterTimeline.to(typewriterText, {
-  duration: 1.5,
-  text: originalName,
-  ease: "none",
-});
+  const typewriterTimeline = gsap.timeline();
 
-// Add the typewriter animation for the subheading after the name is complete
-typewriterTimeline.to(typewriterSubheading, {
-  duration: 2,
-  text: originalSubheading,
-  ease: "none",
-}, "+=0.5");
+  typewriterTimeline.to(typewriterText1, {
+      duration: 1.5,
+      text: originalName1,
+      ease: "none",
+      onUpdate: function() {
+          typewriterText1.classList.add('typing');
+      },
+      onComplete: function() {
+          typewriterText1.classList.remove('typing');
+      }
+  });
+
+  typewriterTimeline.to(typewriterText2, {
+      duration: 1.5,
+      text: originalName2,
+      ease: "none",
+      onUpdate: function() {
+          typewriterText2.classList.add('typing');
+      },
+      onComplete: function() {
+          typewriterText2.classList.remove('typing');
+      }
+  }, "-=0.5");
+
+  typewriterTimeline.to(typewriterSubheading, {
+      duration: 2,
+      text: originalSubheading,
+      ease: "none",
+      onUpdate: function() {
+          typewriterSubheading.classList.add('typing');
+      },
+      onComplete: function() {
+          typewriterSubheading.classList.remove('typing');
+      }
+  }, "+=0.5");
+}
+
+initTypewriterEffect();
 
 // Hero image animation
 const heroImage = document.querySelector('.hero__image-wrapper');
 const heroImageImg = document.querySelector('.hero__image');
 
-// Initial animation for hero image - adjusted for circular image
 gsap.fromTo(heroImage, 
   { y: 100, opacity: 0, scale: 0.8 },
   { y: 0, opacity: 1, scale: 1, duration: 1.5, ease: "power3.out", delay: 0.5 }
 );
 
-// Floating animation for hero image - more subtle for circular image
 gsap.to(heroImage, {
   y: 15,
   duration: 3,
@@ -171,7 +251,6 @@ gsap.to(heroImage, {
   ease: "sine.inOut"
 });
 
-// Rotation animation for circular image
 gsap.to(heroImage, {
   rotation: 5,
   duration: 4,
@@ -181,7 +260,6 @@ gsap.to(heroImage, {
   delay: 1
 });
 
-// Parallax effect for hero image on mouse move - adjusted for circular image
 document.addEventListener('mousemove', (e) => {
   const xPos = (e.clientX / window.innerWidth - 0.5) * 15;
   const yPos = (e.clientY / window.innerHeight - 0.5) * 15;
@@ -200,35 +278,29 @@ const col_left = document.querySelector(".col_left");
 const lastItem = document.querySelector(".vertical__item:last-child");
 const timeline = gsap.timeline({ paused: true });
 
-// Calculate the distance to the last item
 const calculateDistance = () => {
   const verticalContentHeight = document.querySelector('.vertical__content').offsetHeight;
   const lastItemBottom = lastItem.offsetTop + lastItem.offsetHeight;
   const viewportHeight = window.innerHeight;
   
-  // Calculate the maximum scroll distance needed
-  // This ensures the sticky element stops at the last item
   return Math.min(verticalContentHeight - viewportHeight, lastItemBottom - viewportHeight / 2);
 };
 
-// Set up the animation with the calculated distance
 timeline.fromTo(col_left, 
   { y: 0 }, 
   { y: () => calculateDistance(), duration: 1, ease: 'none' }, 
   0
 );
 
-// Create the ScrollTrigger
 const scroll_1 = ScrollTrigger.create({
   animation: timeline,
   trigger: section_1,
   start: 'top top',
   end: () => `+=${calculateDistance() + window.innerHeight}`,
   scrub: true,
-  invalidateOnRefresh: true // Recalculate on window resize
+  invalidateOnRefresh: true
 });
 
-// Update the animation on window resize
 window.addEventListener('resize', () => {
   ScrollTrigger.refresh();
 });
@@ -252,7 +324,6 @@ gsap.to(box_items, {
 // Project image animations
 const projectImages = document.querySelectorAll('.project__image img');
 projectImages.forEach(img => {
-  // Initial animation
   gsap.from(img, {
       scale: 1.2,
       opacity: 0,
@@ -270,7 +341,6 @@ projectImages.forEach(img => {
 // GitHub icon animations
 const githubIcons = document.querySelectorAll('.github-link');
 githubIcons.forEach(icon => {
-  // Hover animation
   icon.addEventListener('mouseenter', () => {
       gsap.to(icon, {
           rotation: 360,
@@ -287,7 +357,6 @@ githubIcons.forEach(icon => {
       });
   });
   
-  // Initial animation
   gsap.from(icon, {
       y: -20,
       opacity: 0,
@@ -305,37 +374,35 @@ githubIcons.forEach(icon => {
 const contactSection = document.getElementById("contact");
 const circleProgress = document.querySelector(".contact__circle-progress");
 const circleWrapper = document.querySelector(".contact__circle-wrapper");
+const circleInner = document.querySelector(".contact__circle-inner");
 
-// Get the circumference of the circle
 const radius = 48;
 const circumference = 2 * Math.PI * radius;
 
-// Set up the circular scroll trigger animation
 ScrollTrigger.create({
   trigger: contactSection,
   start: "top bottom",
   end: "bottom top",
   scrub: true,
   onUpdate: (self) => {
-      // Calculate progress (0 to 1)
       const progress = self.progress;
-      
-      // Calculate the dashoffset based on progress
       const dashoffset = circumference - (progress * circumference);
-      
-      // Update the circle's dashoffset
       circleProgress.style.strokeDashoffset = dashoffset;
       
-      // Rotate the circle based on progress
       gsap.to(circleWrapper, {
           rotation: progress * 360,
+          duration: 0.1,
+          ease: "none"
+      });
+
+      gsap.to(circleInner, {
+          rotation: -(progress * 360),
           duration: 0.1,
           ease: "none"
       });
   }
 });
 
-// Initial animation for contact circle
 gsap.from(circleWrapper, {
   scale: 0.5,
   opacity: 0,
@@ -361,7 +428,6 @@ gsap.from(formElements, {
   }
 });
 
-// Add some subtle animations for page elements
 gsap.from(".hero__heading span", {
   y: 50,
   opacity: 0,
@@ -404,24 +470,19 @@ projectItems.forEach(item => {
   });
 });
 
-// Form submission handling (prevent default for demo)
+// Form submission handling
 const contactForm = document.querySelector('.contact__form');
 if (contactForm) {
   contactForm.addEventListener('submit', (e) => {
       e.preventDefault();
       
-      // Get form values
       const name = document.getElementById('name').value;
       const email = document.getElementById('email').value;
       const message = document.getElementById('message').value;
       
-      // In a real application, you would send this data to a server
       console.log('Form submitted:', { name, email, message });
       
-      // Show success message (in a real app)
       alert('Thanks for your message! I\'ll get back to you soon.');
-      
-      // Reset form
       contactForm.reset();
   });
 }

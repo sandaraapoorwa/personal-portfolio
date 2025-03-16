@@ -9,16 +9,35 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome for GitHub icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Animated Background -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar__logo">
+                <span class="logo-accent">S</span>andara
+            </div>
+            <div class="navbar__links">
+                <a href="#vertical" class="navbar__link">About Me</a>
+                <a href="#horizontal" class="navbar__link">Projects</a>
+                <a href="#contact" class="navbar__link">Contact</a>
+            </div>
+            <div class="navbar__mobile-toggle">
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+                <span class="toggle-bar"></span>
+            </div>
+        </div>
+        <div class="navbar__mobile-menu">
+            <a href="#vertical" class="navbar__mobile-link">About Me</a>
+            <a href="#horizontal" class="navbar__mobile-link">Projects</a>
+            <a href="#contact" class="navbar__mobile-link">Contact</a>
+        </div>
+    </nav>
+
     <div class="animated-background">
         <div class="gradient-bg"></div>
-        <div class="particles-container">
-            <!-- Particles will be added via JavaScript -->
-        </div>
+        <div class="particles-container"></div>
         <div class="floating-shapes">
             <div class="shape shape-1"></div>
             <div class="shape shape-2"></div>
@@ -28,20 +47,19 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
     <section id="hero">
         <div class="container">
             <div class="hero__content">
                 <div class="hero__text">
                     <h1 class="hero__heading">
-                        <span class="typewriter-text">Sandara</span>
-                        <span>Hettiarachchi</span>
+                        <span class="typewriter-text-1" data-text="Sandara"></span>
+                        <span class="typewriter-text-2" data-text="Apoorwa"></span>
                     </h1>
-                    <p class="hero__subheading typewriter-subheading">Creative developer focused on building beautiful digital experiences</p>
+                    <p class="hero__subheading typewriter-subheading" data-text="Creative developer focused on building beautiful digital experiences"></p>
                 </div>
                 <div class="hero__image-container">
                     <div class="hero__image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1618477388954-7852f32655ec?q=80&w=1000" alt="Creative Developer" class="hero__image">
+                        <img src="/sandara.png" alt="Creative Developer" class="hero__image">
                         <div class="hero__image-overlay"></div>
                     </div>
                 </div>
@@ -49,14 +67,12 @@
         </div>
     </section>
 
-    <!-- Vertical Section -->
     <section id="vertical">
         <div class="container">
             <div class="vertical__content">
                 <div class="col col_left">
                     <h2 class="vertical__heading">
-                        <span>Sandara</span>
-                        <span>Hettiarachchi</span>
+                        <span>ABOUT ME </span>
                     </h2>
                 </div>
                 <div class="col col_right">
@@ -65,23 +81,24 @@
                         <p>Creative developer with a passion for building beautiful, functional websites and applications. Specializing in front-end development with a focus on animation and interactive experiences.</p>
                     </div>
                     <div class="vertical__item">
+                        <h3>Education</h3>
+                        <p>Bachelor of Science (Hons) in Computer Science
+                            University of Westminster
+                            2023 - present.</p>
+                    </div>
+                    <div class="vertical__item">
                         <h3>Experience</h3>
                         <p>Over 5 years of experience working with modern web technologies including React, Next.js, and animation libraries like GSAP. Focused on creating performant and accessible websites.</p>
                     </div>
                     <div class="vertical__item">
                         <h3>Skills</h3>
-                        <p>JavaScript, TypeScript, React, Next.js, GSAP, Three.js, CSS, Responsive Design, UI/UX, Animation, and Creative Development.</p>
-                    </div>
-                    <div class="vertical__item">
-                        <h3>Education</h3>
-                        <p>Bachelor of Science in Computer Science with a minor in Digital Arts. Continuous learner with a passion for staying current with emerging technologies.</p>
+                        <p>JavaScript, TypeScript, Java , Python , Nest.js, RESTful APIs , Node.js, Express, React, Next.js, GSAP, Three.js, CSS, Responsive Design, UI/UX, Animation, and Creative Development.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Horizontal Section -->
     <section id="horizontal">
         <div class="container">
             <h2 class="section__heading">Projects</h2>
@@ -92,65 +109,85 @@
                         <a href="https://github.com/sandara/modde" class="github-link" target="_blank">
                             <i class="fa-brands fa-github"></i>
                         </a>
+                        <a href="https://www.linkedin.com/company/105976842" class="github-link" target="_blank">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
                     </div>
-                    <p class="horizontal__desc">A modern e-commerce platform with custom animations and seamless checkout experience.</p>
-                    <div class="project__image">
-                        <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070" alt="Modde E-commerce Project">
+                    <p class="horizontal__desc">
+                        MODDE, your AI-powered shopping assistant, helps you find similar clothing from top Sri Lankan retailers with just upload an image.
+                    </p>
+                    <div class="project__video">
+                        <video autoplay loop muted playsinline poster="/images/modde-poster.jpg">
+                            <source src="/modde.mp4" type="video/mp4">
+                            <source src="/modde.webm" type="video/webm">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
                 <div class="horizontal__item">
                     <div class="project__header">
-                        <div class="horizontal__num">Ticketing App</div>
+                        <div class="horizontal__num">Real Time Ticketing App</div>
                         <a href="https://github.com/sandara/ticketing" class="github-link" target="_blank">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
-                    <p class="horizontal__desc">Real-time ticketing application with live updates and interactive seat selection.</p>
+                    <p class="horizontal__desc">Efficient ticket management with real-time concurrency and synchronization</p>
                     <div class="project__image">
-                        <img src="https://images.unsplash.com/photo-1567593810070-7a3d471af022?q=80&w=2071" alt="Ticketing App Project">
+                        <img src="./ticket.jpg" alt="Ticketing App Project">
                     </div>
                 </div>
                 <div class="horizontal__item">
                     <div class="project__header">
-                        <div class="horizontal__num">Portfolio</div>
+                        <div class="horizontal__num">Plane Seat Management System</div>
                         <a href="https://github.com/sandara/portfolio" class="github-link" target="_blank">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
                     <p class="horizontal__desc">Creative portfolio website with smooth animations and interactive elements.</p>
                     <div class="project__image">
-                        <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=2080" alt="Portfolio Project">
+                        <img src="./plane3.jpg" alt="Portfolio Project">
                     </div>
                 </div>
                 <div class="horizontal__item">
                     <div class="project__header">
-                        <div class="horizontal__num">Agency Site</div>
+                        <div class="horizontal__num">Academic Progression Analysis System</div>
                         <a href="https://github.com/sandara/agency" class="github-link" target="_blank">
                             <i class="fa-brands fa-github"></i>
                         </a>
                     </div>
                     <p class="horizontal__desc">Creative agency website with custom animations and interactive case studies.</p>
                     <div class="project__image">
-                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070" alt="Agency Site Project">
+                        <img src="./analysis.jpg" alt="Agency Site Project">
                     </div>
                 </div>
                 <div class="horizontal__item">
                     <div class="project__header">
-                        <div class="horizontal__num">Contact</div>
+                        <div class="horizontal__num">DreamRealty</div>
+                        <a href="https://github.com/sandara/agency" class="github-link" target="_blank">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
                     </div>
-                    <p class="horizontal__desc">Interested in working together? Let's connect.</p>
-                    <div class="contact__links">
-                        <a href="mailto:hello@sandara.dev">hello@sandara.dev</a>
-                        <a href="https://twitter.com/sandara" target="_blank">Twitter</a>
-                        <a href="https://github.com/sandara" target="_blank">GitHub</a>
-                        <a href="https://linkedin.com/in/sandara" target="_blank">LinkedIn</a>
+                    <p class="horizontal__desc">Real estate Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio dolor animi ab, cum error deleniti, in suscipit nostrum et inventore voluptatem eum ipsa quae blanditiis cupiditate. Magnam perferendis architecto culpa?.</p>
+                    <div class="project__image">
+                        <img src="./dream.jpg" alt="Agency Site Project">
+                    </div>
+                </div>
+                <div class="horizontal__item">
+                    <div class="project__header">
+                        <div class="horizontal__num">Eco-Echoes</div>
+                        <a href="https://github.com/sandara/agency" class="github-link" target="_blank">
+                            <i class="fa-brands fa-github"></i>
+                        </a>
+                    </div>
+                    <p class="horizontal__desc">Creative agency website with custom animations and interactive case studies.</p>
+                    <div class="project__image">
+                        <img src="./land.jpg" alt="Agency Site Project">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Contact Me Section with Circular Scroll Trigger -->
     <section id="contact">
         <div class="container">
             <div class="contact__content">
@@ -187,14 +224,14 @@
                     <div class="contact__info">
                         <div class="contact__info-item">
                             <h4>Email</h4>
-                            <a href="mailto:hello@sandara.dev">hello@sandara.dev</a>
+                            <a href="mailto:apoorwasandara@gmail.com">apoorwasandara@gmail.com</a>
                         </div>
                         <div class="contact__info-item">
                             <h4>Follow</h4>
                             <div class="contact__social">
-                                <a href="https://twitter.com/sandara" target="_blank">Twitter</a>
-                                <a href="https://github.com/sandara" target="_blank">GitHub</a>
-                                <a href="https://linkedin.com/in/sandara" target="_blank">LinkedIn</a>
+                                <a href="https://x.com/SApoorwa" target="_blank">Twitter</a>
+                                <a href="https://github.com/sandaraapoorwa" target="_blank">GitHub</a>
+                                <a href="https://www.linkedin.com/in/sandara-hettiarachchi-830bb6202/" target="_blank">LinkedIn</a>
                             </div>
                         </div>
                     </div>
@@ -203,7 +240,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="container">
             <p>© 2025 Sandara Hettiarachchi</p>
