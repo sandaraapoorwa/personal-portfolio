@@ -12,7 +12,18 @@
     font-weight: 900;
     font-stretch: compressed;
 }
-
+@font-face {
+    font-family: 'Swifty Regular';
+    src: url('/fonts/Swifty-Regular.woff2') format('woff2');
+    font-display: swap;
+    font-weight: 400; /* Swifty Regular is typically a single-weight font */
+}
+@font-face {
+    font-family: 'Gelato Script';
+    src: url('/fonts/GelatoScript.woff2') format('woff2');
+    font-display: swap;
+    font-weight: 400; /* Adjust based on the specific weight you have */
+}
 @font-face {
     font-family: Slussen;
     src: url(/fonts/Slussen-Expanded-Black.woff2) format("woff2");
@@ -78,15 +89,17 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-
 .navbar__logo {
+    font-family: 'Gelato Script', cursive;
     font-size: 24px;
-    font-weight: 700;
+    font-weight: 400; /* Gelato Script typically comes in one weight */
     color: #fff;
+    letter-spacing: 2px; /* Enhances the script's elegance */
+    text-shadow: 0 0 5px rgba(255, 152, 162, 0.3); /* Subtle glow for flair */
 }
 
 .logo-accent {
-    color: #ff98a2;
+    color: #ffebbb;
 }
 
 .navbar__links {
@@ -114,7 +127,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #ff98a2;
+    background-color: #ffebbb;
     transition: width 0.3s ease;
 }
 
@@ -315,13 +328,13 @@ h2 {
 
 h3 {
     font-size: 20px;
-    color: #ff98a2;
+    color: #ffebbb;
     margin-bottom: 12px;
 }
 
 h4 {
     font-size: 16px;
-    color: #ff98a2;
+    color: #ffebbb;
     margin-bottom: 8px;
 }
 
@@ -331,7 +344,7 @@ p {
 }
 
 a {
-    color: #ff98a2;
+    color: #ffebbb;
     text-decoration: none;
     transition: color 0.3s ease;
 }
@@ -510,7 +523,7 @@ section {
 }
 
 .horizontal__item {
-    min-width: 600px; /* Increased width from 500px to 600px */
+    min-width: 600px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 40px;
     border-radius: 4px;
@@ -550,6 +563,11 @@ section {
 
 .horizontal__desc {
     margin-bottom: 24px;
+}
+
+.tech-stack {
+    color: #ff98a2;
+    font-weight: 700;
 }
 
 .project__image {
@@ -606,10 +624,108 @@ section {
     transform: scale(1.05);
 }
 
-.contact__links {
+/* Blog Section */
+#blog {
+    padding: 100px 0;
+    background: rgba(0, 0, 0, 0.9);
+    overflow: hidden;
+}
+
+.blog__dashboard {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #0a0a0a;
+    border: 2px solid #ff94a2;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255, 152, 162, 0.3);
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+}
+
+.blog__header {
+    background: #151515;
+    border-bottom: 2px solid #ff94a2;
+    padding: 8px 12px;
+}
+
+.blog__title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.blog__title {
+    color: #ffebbb;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.blog__controls {
+    display: flex;
+    gap: 8px;
+}
+
+.blog__control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid #fff;
+}
+
+.blog__control--close {
+    background: #ff5555;
+}
+
+.blog__control--minimize {
+    background: #ffbb55;
+}
+
+.blog__control--maximize {
+    background: #55ff55;
+}
+
+.blog__content {
+    padding: 20px;
+    background: #000;
+    min-height: 300px;
+}
+
+.blog__posts {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 20px;
+}
+
+.blog__post {
+    padding: 15px;
+    background: rgba(255, 152, 162, 0.05);
+    border: 1px solid rgba(255, 152, 162, 0.2);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.blog__post:hover {
+    background: rgba(255, 152, 162, 0.1);
+    transform: translateX(5px);
+}
+
+.blog__post-title {
+    color: #ff94a2;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.blog__post-date {
+    color: #ffebbb;
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.blog__post-excerpt {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 /* Contact Section */
@@ -638,6 +754,7 @@ section {
     position: relative;
     width: 400px;
     height: 400px;
+    transition: transform 0.3s ease-out;
 }
 
 .contact__circle {
@@ -647,33 +764,75 @@ section {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease-out;
 }
 
 .contact__circle-inner {
     position: absolute;
     width: 80%;
     height: 80%;
-    background-color: #0a0a0a;
+    background: linear-gradient(135deg, #0a0a0a 0%, #151515 100%);
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
     z-index: 2;
-    box-shadow: 0 0 20px rgba(255, 152, 162, 0.5), /* Light pink glow */
-                0 0 40px rgba(255, 152, 162, 0.3);
-    animation: pulse-glow 3s infinite alternate;
+    cursor: pointer;
+    overflow: hidden;
+    transition: all 0.4s ease-out;
+    box-shadow: 0 0 20px rgba(255, 152, 162, 0.3);
 }
 
-@keyframes pulse-glow {
-    0% {
-        box-shadow: 0 0 20px rgba(255, 152, 162, 0.3),
-                    0 0 40px rgba(255, 152, 162, 0.1);
-    }
-    100% {
-        box-shadow: 0 0 30px rgba(255, 152, 162, 0.7),
-                    0 0 60px rgba(255, 152, 162, 0.4);
-    }
+.contact__circle-inner::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 152, 162, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+}
+
+.contact__circle-inner h2 {
+    font-size: 48px;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(255, 152, 162, 0.3);
+    transition: all 0.3s ease-out;
+    position: relative;
+    z-index: 2;
+}
+
+.contact__circle-wrapper:hover {
+    transform: scale(1.03);
+}
+
+.contact__circle-wrapper:hover .contact__circle-inner {
+    box-shadow: 0 0 30px rgba(255, 152, 162, 0.5),
+                0 0 60px rgba(255, 152, 162, 0.2);
+}
+
+.contact__circle-wrapper:hover .contact__circle-inner::before {
+    opacity: 1;
+}
+
+.contact__circle-wrapper:hover .contact__circle-inner h2 {
+    color: #ffebbb;
+    text-shadow: 0 2px 15px rgba(255, 152, 162, 0.6);
+}
+
+.contact__circle-progress {
+    fill: none;
+    stroke: url(#circleGradient);
+    stroke-width: 2;
+    stroke-dasharray: 301.59;
+    stroke-dashoffset: 301.59;
+    filter: drop-shadow(0 0 8px rgba(255, 152, 162, 0.6));
+    transition: stroke-width 0.3s ease-out;
+}
+
+.contact__circle-wrapper:hover .contact__circle-progress {
+    stroke-width: 2.5;
 }
 
 .contact__circle-svg {
@@ -683,16 +842,6 @@ section {
     width: 100%;
     height: 100%;
     transform: rotate(-90deg);
-}
-
-.contact__circle-progress {
-    fill: none;
-    stroke: #ff94a2;
-    stroke-width: 2;
-    stroke-dasharray: 301.59;
-    stroke-dashoffset: 301.59;
-    transition: stroke-dashoffset 0.5s ease;
-    filter: drop-shadow(0 0 8px rgba(255, 152, 162, 0.6));
 }
 
 .contact__form-container {
@@ -871,8 +1020,20 @@ footer .container {
     }
     
     .horizontal__item {
-        min-width: 400px; /* Adjusted for smaller screens */
+        min-width: 400px;
         padding: 30px;
+    }
+    
+    .blog__dashboard {
+        margin: 0 10px;
+    }
+    
+    .blog__post {
+        padding: 10px;
+    }
+    
+    .blog__post-title {
+        font-size: 16px;
     }
     
     .contact__info {
