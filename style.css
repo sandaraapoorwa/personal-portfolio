@@ -516,6 +516,12 @@ section {
     border-radius: 4px;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.horizontal__item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(255, 152, 162, 0.1);
 }
 
 .project__header {
@@ -656,12 +662,18 @@ section {
     z-index: 2;
     box-shadow: 0 0 20px rgba(255, 152, 162, 0.5), /* Light pink glow */
                 0 0 40px rgba(255, 152, 162, 0.3);
+    animation: pulse-glow 3s infinite alternate;
 }
 
-.contact__circle-inner h2 {
-    font-size: 48px;
-    color: #ff94a2;
-    line-height: 0.9;
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 20px rgba(255, 152, 162, 0.3),
+                    0 0 40px rgba(255, 152, 162, 0.1);
+    }
+    100% {
+        box-shadow: 0 0 30px rgba(255, 152, 162, 0.7),
+                    0 0 60px rgba(255, 152, 162, 0.4);
+    }
 }
 
 .contact__circle-svg {
@@ -680,6 +692,7 @@ section {
     stroke-dasharray: 301.59;
     stroke-dashoffset: 301.59;
     transition: stroke-dashoffset 0.5s ease;
+    filter: drop-shadow(0 0 8px rgba(255, 152, 162, 0.6));
 }
 
 .contact__form-container {
