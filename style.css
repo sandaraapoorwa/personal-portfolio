@@ -18,12 +18,7 @@
     font-display: swap;
     font-weight: 400; /* Swifty Regular is typically a single-weight font */
 }
-@font-face {
-    font-family: 'Gelato Script';
-    src: url('/fonts/GelatoScript.woff2') format('woff2');
-    font-display: swap;
-    font-weight: 400; /* Adjust based on the specific weight you have */
-}
+
 @font-face {
     font-family: Slussen;
     src: url(/fonts/Slussen-Expanded-Black.woff2) format("woff2");
@@ -90,7 +85,7 @@ body {
     align-items: center;
 }
 .navbar__logo {
-    font-family: 'Gelato Script', cursive;
+    font-family: 'Inter', Slussen, sans-serif;
     font-size: 24px;
     font-weight: 400; /* Gelato Script typically comes in one weight */
     color: #fff;
