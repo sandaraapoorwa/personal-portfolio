@@ -94,7 +94,7 @@ body {
 }
 
 .logo-accent {
-    color: #ffebbb;
+    color: #ffb3ba;
 }
 
 .navbar__links {
@@ -122,7 +122,7 @@ body {
     left: 0;
     width: 0;
     height: 2px;
-    background-color: #ffebbb;
+    background-color: #ffb3ba;
     transition: width 0.3s ease;
 }
 
@@ -323,13 +323,13 @@ h2 {
 
 h3 {
     font-size: 20px;
-    color: #ffebbb;
+    color: #ffb3ba;
     margin-bottom: 12px;
 }
 
 h4 {
     font-size: 16px;
-    color: #ffebbb;
+    color: #ffb3ba;
     margin-bottom: 8px;
 }
 
