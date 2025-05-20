@@ -594,54 +594,104 @@ projectItems.forEach(item => {
     });
 });
 
-// Form submission handling
+// Form submission handling with EmailJS
 const contactForm = document.querySelector('.contact__form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
-        
+
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const message = document.getElementById('message').value;
-        
-        console.log('Form submitted:', { name, email, message });
-        
-        const formContainer = document.querySelector('.contact__form-container');
-        const successMessage = document.createElement('div');
-        successMessage.classList.add('success-message');
-        successMessage.innerHTML = `<h3>Thanks for your message, ${name}!</h3><p>I'll get back to you soon.</p>`;
-        
-        gsap.to(contactForm, {
-            opacity: 0,
-            y: -20,
-            duration: 0.5,
-            onComplete: () => {
-                contactForm.style.display = 'none';
-                formContainer.appendChild(successMessage);
-                
-                gsap.from(successMessage, {
-                    opacity: 0,
-                    y: 20,
-                    duration: 0.5
-                });
-                
-                setTimeout(() => {
-                    gsap.to(successMessage, {
+
+        // EmailJS send email
+        emailjs.send('service_dxtyh6i', 'template_efqw5wj', {
+            name: name,
+            email: email,
+            message: message
+        })
+        .then((response) => {
+            console.log('Email sent successfully:', response.status, response.text);
+
+            const formContainer = document.querySelector('.contact__form-container');
+            const successMessage = document.createElement('div');
+            successMessage.classList.add('success-message');
+            successMessage.innerHTML = `<h3>Thanks for your message, ${name}!</h3><p>I'll get back to you soon.</p>`;
+
+            gsap.to(contactForm, {
+                opacity: 0,
+                y: -20,
+                duration: 0.5,
+                onComplete: () => {
+                    contactForm.style.display = 'none';
+                    formContainer.appendChild(successMessage);
+
+                    gsap.from(successMessage, {
                         opacity: 0,
-                        y: -20,
-                        duration: 0.5,
-                        onComplete: () => {
-                            successMessage.remove();
-                            contactForm.style.display = 'block';
-                            gsap.to(contactForm, {
-                                opacity: 1,
-                                y: 0,
-                                duration: 0.5
-                            });
-                        }
+                        y: 20,
+                        duration: 0.5
                     });
-                }, 3000);
-            }
+
+                    setTimeout(() => {
+                        gsap.to(successMessage, {
+                            opacity: 0,
+                            y: -20,
+                            duration: 0.5,
+                            onComplete: () => {
+                                successMessage.remove();
+                                contactForm.style.display = 'block';
+                                contactForm.reset(); // Reset form fields
+                                gsap.to(contactForm, {
+                                    opacity: 1,
+                                    y: 0,
+                                    duration: 0.5
+                                });
+                            }
+                        });
+                    }, 3000);
+                }
+            });
+        }, (error) => {
+            console.error('Failed to send email:', error);
+
+            const formContainer = document.querySelector('.contact__form-container');
+            const errorMessage = document.createElement('div');
+            errorMessage.classList.add('error-message');
+            errorMessage.innerHTML = `<h3>Oops! Something went wrong.</h3><p>Please try again later or contact me directly at <a href="mailto:apoorwasandara@gmail.com">apoorwasandara@gmail.com</a>.</p>`;
+
+            gsap.to(contactForm, {
+                opacity: 0,
+                y: -20,
+                duration: 0.5,
+                onComplete: () => {
+                    contactForm.style.display = 'none';
+                    formContainer.appendChild(errorMessage);
+
+                    gsap.from(errorMessage, {
+                        opacity: 0,
+                        y: 20,
+                        duration: 0.5
+                    });
+
+                    setTimeout(() => {
+                        gsap.to(errorMessage, {
+                            opacity: 0,
+                            y: -20,
+                            duration: 0.5,
+                            onComplete: () => {
+                                errorMessage.remove();
+                                contactForm.style.display = 'block';
+                                contactForm.reset(); // Reset form fields
+                                gsap.to(contactForm, {
+                                    opacity: 1,
+                                    y: 0,
+                                    duration: 0.5
+                                });
+                            }
+                        });
+                    }, 3000);
+                }
+            });
         });
     });
 }
