@@ -47,6 +47,8 @@ function initAnimatedBackground() {
     container.appendChild(frag);
 }
 
+
+
 // ============================================================
 // NAVBAR
 // ============================================================
@@ -514,11 +516,77 @@ function initForm() {
         }).catch(() => { btn.textContent = 'Error'; btn.disabled = false; });
     });
 }
+// ============================================================
+// CUSTOM CURSOR
+// ============================================================
+function initCustomCursor() {
+    const dot  = document.createElement('div');
+    const ring = document.createElement('div');
+    dot.className  = 'cursor-dot';
+    ring.className = 'cursor-ring';
+    document.body.appendChild(dot);
+    document.body.appendChild(ring);
+
+    let mouseX = 0, mouseY = 0;
+    let ringX  = 0, ringY  = 0;
+    let rafId;
+
+    // Direct position for dot (instant)
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top  = mouseY + 'px';
+        document.body.classList.remove('cursor-out');
+    }, { passive: true });
+
+    // Smooth lag for ring
+    function animateRing() {
+        ringX += (mouseX - ringX) * 0.12;
+        ringY += (mouseY - ringY) * 0.12;
+        ring.style.left = ringX + 'px';
+        ring.style.top  = ringY + 'px';
+        rafId = requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // Hover effect on interactive elements
+    const hoverEls = 'a, button, [onclick], input, textarea, select, .navbar__mobile-toggle, .exp-card, .horizontal__item, .blog__post, .contact__circle-inner, .github-link, .back-to-top, .form__submit, .exp-dot';
+
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest(hoverEls)) {
+            document.body.classList.add('cursor-hover');
+        }
+    }, { passive: true });
+
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest(hoverEls)) {
+            document.body.classList.remove('cursor-hover');
+        }
+    }, { passive: true });
+
+    // Click pulse
+    document.addEventListener('mousedown', () => {
+        document.body.classList.add('cursor-click');
+    });
+    document.addEventListener('mouseup', () => {
+        document.body.classList.remove('cursor-click');
+    });
+
+    // Hide when leaving window
+    document.addEventListener('mouseleave', () => {
+        document.body.classList.add('cursor-out');
+    });
+    document.addEventListener('mouseenter', () => {
+        document.body.classList.remove('cursor-out');
+    });
+}
 
 // ============================================================
 // INIT
 // ============================================================
 window.addEventListener('load', () => {
+    initCustomCursor();
     initAnimatedBackground();
     initNavbar();
     initHeroIntro();

@@ -14,6 +14,68 @@
     --text-faint:    rgba(255,255,255,0.60);
     --text-hint:     rgba(255,255,255,0.40);
 }
+/* ============================================================
+   CUSTOM CURSOR
+   ============================================================ */
+*, *::before, *::after { cursor: none !important; }
+html { cursor: none !important; }
+a, button, input, textarea, select { cursor: none !important; }
+
+.cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: #a855f7;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: width 0.15s ease, height 0.15s ease, background 0.15s ease, opacity 0.15s ease;
+    box-shadow: 0 0 8px rgba(168,85,247,0.8);
+    will-change: transform;
+}
+
+.cursor-ring {
+    position: fixed;
+    top: 0; left: 0;
+    width: 36px; height: 36px;
+    border: 1.5px solid rgba(168,85,247,0.7);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, opacity 0.25s ease, background 0.25s ease;
+    backdrop-filter: blur(0px);
+    will-change: transform;
+}
+
+/* Hover state — links, buttons, clickable */
+body.cursor-hover .cursor-dot {
+    width: 6px; height: 6px;
+    background: #c084fc;
+    box-shadow: 0 0 12px rgba(192,132,252,0.9);
+}
+body.cursor-hover .cursor-ring {
+    width: 52px; height: 52px;
+    border-color: rgba(192,132,252,0.9);
+    background: rgba(168,85,247,0.06);
+}
+
+/* Click state */
+body.cursor-click .cursor-dot {
+    width: 10px; height: 10px;
+    background: #fbf8ff;
+    box-shadow: 0 0 16px rgba(216,180,254,1);
+}
+body.cursor-click .cursor-ring {
+    width: 28px; height: 28px;
+    border-color: rgba(216,180,254,1);
+    background: rgba(255, 255, 255, 0.343);
+}
+
+/* Hide cursor when leaving window */
+body.cursor-out .cursor-dot,
+body.cursor-out .cursor-ring { opacity: 0; }
 
 /* ============================================================
    BASE RESET
