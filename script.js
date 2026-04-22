@@ -34,7 +34,7 @@ function initAnimatedBackground() {
         const p = document.createElement('div');
         p.classList.add('particle');
         const s = Math.random() * 8 + 3;
-        p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*0.25+0.06};background:rgba(255,152,162,0.7);border-radius:50%;position:absolute;will-change:transform;`;
+        p.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*0.25+0.06};background:rgba(168,85,247,0.7);border-radius:50%;position:absolute;will-change:transform;`;
         frag.appendChild(p);
         gsap.to(p, {
             x: () => (Math.random()-.5)*100,
@@ -334,8 +334,8 @@ function initExperienceStack() {
         });
     });
 
-    // Total pinned scroll distance: n cards × 1.8vh each
-    const totalScroll = window.innerHeight * 1.8 * n;
+    // Total pinned scroll distance: n cards × 3.0vh each — slower, more deliberate
+    const totalScroll = window.innerHeight * 3.0 * n;
 
     ScrollTrigger.create({
         trigger:    section,
@@ -343,7 +343,7 @@ function initExperienceStack() {
         end:        `+=${totalScroll}`,
         pin:        true,
         pinSpacing: true,
-        scrub:      1.1,
+        scrub:      2.0,
         invalidateOnRefresh: true,
 
         onUpdate(self) {
@@ -410,7 +410,7 @@ function initExperienceStack() {
                 const num = card.querySelector('.exp-num');
                 if (num) {
                     const alpha = Math.max(0.10, 0.55 - depth * 0.15);
-                    num.style.color = `rgba(255,152,162,${alpha.toFixed(2)})`;
+                    num.style.color = `rgba(168,85,247,${alpha.toFixed(2)})`;
                 }
             });
         }
@@ -456,14 +456,38 @@ function initBlog() {
 function initContact() {
     const circle  = document.querySelector('.contact__circle-progress');
     const section = document.getElementById('contact');
+    const connectBtn = document.getElementById('connectCircle');
+    const formContainer = document.querySelector('.contact__form-container');
+    const nameInput = document.getElementById('name');
+
     if (!circle || !section) return;
 
+    // Animated ring progress on scroll
     const circ = 2 * Math.PI * 48;
     ScrollTrigger.create({
         trigger: section, start: 'top bottom', end: 'bottom top', scrub: 2,
         onUpdate: self => {
             circle.style.strokeDashoffset = circ - self.progress * circ * 0.85;
         }
+    });
+
+    // "Let's Connect" click — scroll to form and focus the first input
+    if (!connectBtn || !formContainer) return;
+
+    connectBtn.addEventListener('click', () => {
+        // Scroll smoothly to the form container
+        lenis.scrollTo(formContainer, { offset: -120, duration: 1.4 });
+
+        // After scroll lands, flash a highlight on the form and focus the name field
+        setTimeout(() => {
+            // Pulse the form border pink
+            gsap.fromTo(formContainer,
+                { boxShadow: '0 0 0 2px rgba(255,152,162,0.80), 0 0 40px rgba(255,152,162,0.30)' },
+                { boxShadow: '0 0 0 0px rgba(255,152,162,0), 0 0 0px rgba(255,152,162,0)', duration: 1.6, ease: 'power2.out' }
+            );
+            // Focus the name input
+            if (nameInput) nameInput.focus();
+        }, 1000);
     });
 }
 
